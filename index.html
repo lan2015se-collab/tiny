@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DADROCK - Minecraft 基岩版模組</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%238b4513'/><rect x='20' y='20' width='30' height='30' fill='%23a0522d'/><rect x='50' y='20' width='30' height='30' fill='%23654321'/><rect x='20' y='50' width='30' height='30' fill='%23654321'/><rect x='50' y='50' width='30' height='30' fill='%23a0522d'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid #8b4513;
+        }
+        
+        .header-content h1 {
+            font-size: 3rem;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-content p {
+            color: #bdc3c7;
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #8b4513;
+        }
+        
+        .intro h2 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+        
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .mod-card {
+            background: rgba(26, 26, 46, 0.9);
+            border: 1px solid #8b4513;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mod-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8b4513, #a0522d, #8b4513);
+        }
+        
+        .mod-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            background: rgba(26, 26, 46, 1);
+            box-shadow: 0 8px 16px rgba(255, 215, 0, 0.2);
+        }
+        
+        .mod-card h3 {
+            color: #ffd700;
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+        
+        .mod-card p {
+            color: #bdc3c7;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            min-height: 2.5rem;
+        }
+        
+        .mod-badge {
+            display: inline-block;
+            background: #8b4513;
+            color: #ffd700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .mod-link {
+            display: inline-block;
+            background: #8b4513;
+            color: #ffd700;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .mod-link:hover {
+            background: #a0522d;
+            color: #ffed4e;
+            transform: scale(1.05);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: rgba(139, 69, 19, 0.2);
+            border: 1px solid #8b4513;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #bdc3c7;
+            margin-top: 0.5rem;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid #8b4513;
+            color: #888;
+            margin-top: 3rem;
+        }
+        
+        .tag-new {
+            background: #27ae60;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .mods-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>⛏️ DADROCK</h1>
+            <p>Minecraft 基岩版最優秀的模組合集</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>歡迎來到 DADROCK</h2>
+            <p>精選最好用的 Minecraft 基岩版模組，提升你的遊戲體驗。無論是單人冒險還是多人合作，都能找到適合的模組。</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">6+</div>
+                <div class="stat-label">精選模組</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">免費使用</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">持續</div>
+                <div class="stat-label">更新維護</div>
+            </div>
+        </div>
+        
+        <div class="mods-grid">
+            <div class="mod-card">
+                <div class="mod-badge">基礎工具</div>
+                <h3>死亡屍體與座標 <span class="tag-new">NEW</span></h3>
+                <p>當你死亡時會將物品存入骷髏屍體中，並在聊天中顯示你的死亡座標。不再有被熔岩、消失或忘記死在哪裡的事。</p>
+                <a href="https://illusd.com/84711" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+            
+            <div class="mod-card">
+                <div class="mod-badge">挖礦效率</div>
+                <h3>更優秀的靜脈礦工</h3>
+                <p>連鎖挖礦功能，大幅提升採礦效率。輕鬆挖掘大量相同礦物，節省時間精力。</p>
+                <a href="https://illusd.com/60519" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+            
+            <div class="mod-card">
+                <div class="mod-badge">照明系統</div>
+                <h3>系統動態燈</h3>
+                <p>不須放置火把即可照亮你手中的東西。創新的動態照明系統，提供更好的視覺體驗。</p>
+                <a href="https://illusd.com/91792" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+            
+            <div class="mod-card">
+                <div class="mod-badge">監控安全</div>
+                <h3>實際的監視攝影機</h3>
+                <p>在世界各地設置攝影機，實時監控你最喜歡的地方或其他玩家基地。再也不會被突襲。</p>
+                <a href="https://illusd.com/85740" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+            
+            <div class="mod-card">
+                <div class="mod-badge">物品管理</div>
+                <h3>True Backpack</h3>
+                <p>解決 Minecraft 物品欄不夠的問題。擁有額外的背包空間，輕鬆攜帶更多物資。</p>
+                <a href="https://illusd.com/33254" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+            
+            <div class="mod-card">
+                <div class="mod-badge">難度調整</div>
+                <h3>Bedrock Plus</h3>
+                <p>強化原版怪物的移動速度、血量與攻擊力，增加遊戲挑戰性。追求刺激的玩家必備。</p>
+                <a href="https://illusd.com/82187" class="mod-link" target="_blank">查看詳情</a>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(139, 69, 19, 0.1); border-radius: 8px;">
+            <h2 style="color: #ffd700; margin-bottom: 1rem;">還有更多模組</h2>
+            <p style="color: #bdc3c7; margin-bottom: 1.5rem;">我們不斷更新和添加新的高品質模組。敬請期待更多功能！</p>
+            <p style="color: #999; font-size: 0.95rem;">所有模組都經過精心挑選，確保品質和相容性。</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 DADROCK - Minecraft Bedrock Edition Mods</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">由 illusd.com 驅動</p>
+    </footer>
+</body>
+</html>
